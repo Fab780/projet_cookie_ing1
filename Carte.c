@@ -12,16 +12,16 @@
 #define TAUX_DIFF_NORMAL 0.4
 #define TAUX_DIFF_HARD 0.7
 
-char*** AllocMap(int int_mapSize)
+char** AllocMap(int int_mapSize)
 {
-    char*** matrice_Map = malloc(int_mapSize * sizeof(char*));
+    char** matrice_Map = malloc(int_mapSize * sizeof(char*));
     for(int i = 0 ; i < int_mapSize ; i++ ) {
-        matrice_Map[i] = malloc(int_mapSize * sizeof(char*));
+        matrice_Map[i] = malloc(int_mapSize * sizeof(char));
     }
     return matrice_Map;
 }
 
-char*** GenerateMap(int int_mapSize, char*** matrice_Map)
+char** GenerateMap(int int_mapSize, char** matrice_Map) //Work In Progress
 {
     for( int i = 0 ; i<int_mapSize; i++) { 
        for( int j = 0 ; j<int_mapSize ; j++){
@@ -35,7 +35,7 @@ char*** GenerateMap(int int_mapSize, char*** matrice_Map)
 int main(void)
 {
     int int_mapSize = TAILLE_AVE_MAP;
-    char*** matrice_Map = AllocMap(int_mapSize);
+    char** matrice_Map = AllocMap(int_mapSize);
     matrice_Map = GenerateMap(int_mapSize, matrice_Map);
     
 
