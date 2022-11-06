@@ -67,6 +67,46 @@ int** AllocMap(int int_mapSize)
     return (matrice_Map);
 }
 
+int ** PlaceObstacle(int** matrice_Map, int int_row, int int_col, int int_mapSize, float float_diffRate, int int_distBase) // place un obstacle et en fonction du difficulty rate, de la taille de la map et de la RNG crée une "fillon" d'obstacles
+{
+    matrice_Map[int_row][int_col] = REP_OBSTACLE ;
+
+    if( (RNG(0, ( ( 80  * int_distBase  * (RNG(10, 15) / 10) ) / ( float_diffRate * (int_mapSize / 10) ) ) ) < 50) || int_distBase > (int_mapSize * float_diffRate) / 10 ){
+        switch (RNG(1,4))
+        {
+        case 1:
+            if( int_col + 1 < int_mapSize && matrice_Map[int_row][int_col + 1] == NULL ) {
+                matrice_Map = PlaceObstacle(matrice_Map, int_row, int_col + 1, int_mapSize, float_diffRate, int_distBase + 1);
+            } else {
+                return matrice_Map;
+            }
+            break;
+        case 2:
+            if( int_row + 1 < int_mapSize && matrice_Map[int_row + 1][int_col] == NULL ) {
+                matrice_Map = PlaceObstacle(matrice_Map, int_row + 1, int_col, int_mapSize, float_diffRate, int_distBase + 1);
+            } else {
+                return matrice_Map;
+            }
+            break;
+        case 3:
+            if( int_row - 1 >= 0 && matrice_Map[int_row - 1][int_col] == NULL ) {
+                matrice_Map = PlaceObstacle(matrice_Map, int_row - 1, int_col, int_mapSize, float_diffRate, int_distBase + 1);
+            } else {
+                return matrice_Map;
+            }
+            break;
+        case 4:
+            if( int_col - 1 >= 0 && matrice_Map[int_row][int_col - 1] == NULL ) {
+                matrice_Map = PlaceObstacle(matrice_Map, int_row, int_col - 1, int_mapSize, float_diffRate, int_distBase + 1);
+            } else {
+                return matrice_Map;
+            }
+            break;
+        }
+    }
+    return (matrice_Map);
+}
+
 int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate) //Work In Progress
 {
     int int_nbObstacles = int_mapSize * float_diffRate ;
@@ -111,7 +151,7 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate) //Wo
         int_rdmCol = RNG(0,int_maxCoord);
 
         if( matrice_Map[int_rdmRow][int_rdmCol] == NULL ) {
-             matrice_Map[int_rdmRow][int_rdmCol] = REP_OBSTACLE ;
+             matrice_Map = PlaceObstacle(matrice_Map, int_rdmRow, int_rdmCol, int_mapSize, float_diffRate, 1);
              int_nbObstacles--;
         }
     }
