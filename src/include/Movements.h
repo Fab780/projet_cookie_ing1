@@ -12,11 +12,6 @@
 #include <stdio.h>
 #include <termios.h>
 
-#define UP_ARROW    259
-#define LEFT_ARROW  260
-#define DOWN_ARROW  258
-#define RIGHT_ARROW 261
-
 static struct termios old, current;
 
 int main() {
