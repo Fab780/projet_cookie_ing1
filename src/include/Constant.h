@@ -38,4 +38,13 @@
     #define DOWNBAR "\uff3f"
     #define UPBAR "\uffe3"
 
+    #define HAUT 122
+    #define BAS  120
+    #define GAUCHE  113
+    #define DROITE 100
+    #define HAUT_GAUCHE 97
+    #define HAUT_DROITE  101
+    #define BAS_GAUCHE  119
+    #define BAS_DROITE 99
+
 #endif
