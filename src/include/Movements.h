@@ -43,6 +43,8 @@ int main() {
         printf("SOME OTHER SCROLL KEY PRESSED: %d\n", ch);
         break;
     }
+    current.c_lflag |= ECHO; /* set echo mode */
+    tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
     return 0;
 }
 
