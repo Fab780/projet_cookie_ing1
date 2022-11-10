@@ -9,9 +9,13 @@
     #define TAILLE_AVE_MAP 20
     #define TAILLE_LIL_MAP 10
 
-    #define TAUX_DIFF_EZ 0.4
+    #define TAUX_DIFF_EZ 0.7
     #define TAUX_DIFF_NORMAL 1.15
     #define TAUX_DIFF_HARD 1.9
+
+    #define BASE_ENERGY 20
+    #define GAIN_ENERGY 10
+    #define LOST_ENERGY 10
 
     #define REP_CHARACTER 'P'
     #define REP_BONUS1 'b'

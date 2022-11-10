@@ -3,9 +3,10 @@
 
 #include "Constante.h"
 
-int ExistFile(char Nomfichier[]){
-    FILE* fichier = fopen(Nomfichier, "r+");  
-    if (fichier == NULL){// Le fichier n'existe pas
+int ExistFile(char char_NameFile[])
+{
+    FILE* File = fopen(char_NameFile, "r+");  
+    if (File == NULL){// Le fichier n'existe pas
         return 0;
     }else{// Le fichier existe  
         fclose(fichier);
@@ -13,17 +14,19 @@ int ExistFile(char Nomfichier[]){
     }
 }
 
-void createFile(char Nomfichier[]){
-    FILE* fichier = fopen(Nomfichier, "w+");  
+void createFile(char char_NameFile[])
+{
+    FILE* File = fopen(char_NameFile, "w+");  
         fclose(fichier);
 }
 
-int SupprFile(char Nomfichier[]){
-    int A = ExistFile(Nomfichier);
-    if (A == 0){// Le fichier n'existe pas, on ne peut donc pas le supprimer
+int SupprFile(char char_NameFile[])
+{
+    int int_A = ExistFile(char_NameFile);
+    if (int_A == 0){// Le fichier n'existe pas, on ne peut donc pas le supprimer
         return 0;
     }else{// Le fichier existe, on le supprime
-        remove(Nomfichier);
+        remove(char_NameFile);
         return 1;
     }
 }

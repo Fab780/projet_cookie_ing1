@@ -8,6 +8,20 @@
 #include "Constant.h"
 #include "Miscellanous.h"
 
+
+PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
+{
+    PlayerInfo playerInfo_player;
+    playerInfo_player.int_x=0;
+    playerInfo_player.int_y=0;
+    playerInfo_player.int_energy=0;
+    playerInfo_player.int_distance=0;
+    playerInfo_player.int_gain_energy=0;
+    playerInfo_player.int_lost_energy=0;
+    playerInfo_player.int_backward=6;
+    return playerInfo_player;
+}
+
 float ChooseDifficulty()
 {
     int int_scanDiff;
@@ -46,6 +60,12 @@ int ChooseMapSize()
     }
 }
 
+int InitEnergy(int int_mapSize, PlayerInfo *playerInfo_player) // Initialise l'énergie de base du joueur en fonction de la taille de la carte
+{
+    playerInfo_player->int_energy = BASE_ENERGY * int_mapSize;
+    return(playerInfo_player->int_energy);
+}
+
 void UnallocMatriceMap(int** matrice_Map, int int_mapSize)
 {
     for(int i = 0; i<int_mapSize ; i++){
@@ -57,13 +77,13 @@ void UnallocMatriceMap(int** matrice_Map, int int_mapSize)
 
 int** AllocMatriceMap(int int_mapSize)
 {
-    int** matrice_Map = malloc(int_mapSize * sizeof(*matrice_Map));       
+    int** matrice_Map = malloc(int_mapSize * sizeof(*matrice_Map));   
     if(matrice_Map == NULL){
         exit(EXIT_FAILURE);
     }
 
     for(int i=0 ; i < int_mapSize ; i++){
-        matrice_Map[i] = malloc(int_mapSize * sizeof(**matrice_Map) );       
+        matrice_Map[i] = malloc(int_mapSize * sizeof(**matrice_Map) );
         if(matrice_Map[i] == NULL){  
             for(i = i-1 ; i >= 0 ; i--) {   
               free(matrice_Map[i]);
@@ -126,7 +146,7 @@ int ** PlaceObstacle(int** matrice_Map, int int_row, int int_col, int int_mapSiz
     return (matrice_Map);
 }
 
-int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate) //Work In Progress
+int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, PlayerInfo *playerInfo_player) //Work In Progress
 {
     float int_nbObstacles = int_mapSize * float_diffRate ;
     float int_nbBonus = ( ( int_mapSize / (12 * float_diffRate) ) * ( 2 - float_diffRate ) ) + (RNG(0,12)/(5*float_diffRate));
@@ -140,16 +160,20 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate) //Wo
     {
     case 2:
         matrice_Map[int_maxCoord][0]= REP_CHARACTER;
+        playerInfo_player->int_x = int_maxCoord; //on donne les informations du placement du personnage dans le récapitulatif des informations du joueur
         int_rdmRow = RNG( 0, int_qrtCoord );
         int_rdmCol = RNG( int_maxCoord - int_qrtCoord + int_rdmRow - int_qrtCoord, int_maxCoord);
         break;
     case 3:
         matrice_Map[0][int_maxCoord]= REP_CHARACTER;
+        playerInfo_player->int_y = int_maxCoord;
         int_rdmRow = RNG( int_maxCoord - int_qrtCoord, int_maxCoord );
         int_rdmCol = RNG( 0, int_rdmRow - int_maxCoord + int_qrtCoord );
         break;
     case 4:
         matrice_Map[int_maxCoord][int_maxCoord]= REP_CHARACTER;
+        playerInfo_player->int_x = int_maxCoord;
+        playerInfo_player->int_y = int_maxCoord;
         int_rdmRow = RNG( 0, int_qrtCoord );
         int_rdmCol = RNG( 0, int_qrtCoord - int_rdmRow );
         break;
