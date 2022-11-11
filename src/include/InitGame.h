@@ -132,7 +132,19 @@ int*** AllocMatriceDistance(int int_mapSize)
         for(int j = 0 ; j < int_mapSize; j++)
         { 
             matrice_Distance[i][j] = malloc(int_mapSize * sizeof(***matrice_Distance) );
-        //manque if et free..
+            if(matriceDistance[i][j] == NULL) 
+            {
+                for(i = i-1 ; i >= 0 ; i--) 
+                {
+                    for(j=j-1;j>=0;j--)
+                    {
+                        free(matrice_Distance[i][j];
+                    }
+                    free(matrice_Distance[i]);
+                 }
+                free(matrice_Distance);
+                exit(EXIT_FAILURE);
+            } 
         }
     }
     return (matrice_Distance);
