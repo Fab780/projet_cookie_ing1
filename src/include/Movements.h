@@ -83,7 +83,9 @@ int ListenKeyboard()
     return ch;
 }
 
-//ChangePosition(ch, &int_wanted_x, &int_wanted_y); APPELLE DE FONCTION POUR JORDAN C'EST CE QUE TU VEUX ????????????????????????????
+//int key_pressed;
+//key_pressed = ListenKeyboard()
+//ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y); APPELLE DE FONCTION POUR JORDAN C'EST CE QUE TU VEUX ????????????????????????????
 int ** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player) // Met à jour les informations du joueur ainsi que la map en fonction du déplacement
 {   
     matrice_map[s_playerInfo_player->int_x][s_playerInfo_player->int_y] = REP_VOID;
