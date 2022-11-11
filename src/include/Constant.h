@@ -50,5 +50,7 @@
     #define HAUT_DROITE  101
     #define BAS_GAUCHE  119
     #define BAS_DROITE 99
+    #define RETOUR_ARRIERE 114
+    #define SAUVEGARDER 112
 
 #endif
