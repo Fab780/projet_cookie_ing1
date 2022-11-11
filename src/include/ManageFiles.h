@@ -1,7 +1,7 @@
 #ifndef MANAGEFILE_H
 #define MANAGEFILE_H
 
-#include "Constant.h"
+#include "Constante.h"
 
 int ExistFile(char char_NameFile[])
 {
