@@ -101,27 +101,23 @@ void UnallocMatriceDistance(int*** matrice_Distance, int int_mapSize)
     for(int i = 0; i<int_mapSize ; i++){
         for(int j = 0; j< int_mapSize; j++)
         {
-            free(matrice_Map[i][j]);
+            free(matrice_Distance[i][j]);
         }
+        free(matrice_Distance[i]);
     }
-    for(int p = 0; p<int_mapSize ; p++){
-        free(matrice_Map[p]);
-    }
-    free(matrice_Map);
+    free(matrice_Distance);
     return;
 }  
 
-
-
-int*** AllocMatriceDistance(int int_mapSize)
+int*** AllocMatriceDistance(int int_mapSize) 
 {
-    int*** matrice_Distance = malloc(int_mapSize * int_mapSize *  sizeof(*matrice_Distance));       
+    int*** matrice_Distance = malloc(8 * int_mapSize * int_mapSize *  sizeof(*matrice_Distance));       
     if(matrice_Distance == NULL){
         exit(EXIT_FAILURE);
     } 
     for(int i=0 ; i < int_mapSize ; i++)
     {
-        matrice_Distance[i] = malloc(int_mapSize * int_mapSize * sizeof(**matrice_Distance) );      
+        matrice_Distance[i] = malloc(8 * int_mapSize * sizeof(**matrice_Distance) );      
         if(matrice_Distance[i] == NULL){  
             for(i = i-1 ; i >= 0 ; i--) {   
               free(matrice_Distance[i]);
@@ -131,14 +127,14 @@ int*** AllocMatriceDistance(int int_mapSize)
         }       
         for(int j = 0 ; j < int_mapSize; j++)
         { 
-            matrice_Distance[i][j] = malloc(int_mapSize * sizeof(***matrice_Distance) );
-            if(matriceDistance[i][j] == NULL) 
+            matrice_Distance[i][j] = malloc(8 * sizeof(***matrice_Distance) );
+            if(matrice_Distance[i][j] == NULL) 
             {
                 for(i = i-1 ; i >= 0 ; i--) 
                 {
                     for(j=j-1;j>=0;j--)
                     {
-                        free(matrice_Distance[i][j];
+                        free(matrice_Distance[i][j]);
                     }
                     free(matrice_Distance[i]);
                  }
@@ -149,9 +145,6 @@ int*** AllocMatriceDistance(int int_mapSize)
     }
     return (matrice_Distance);
 }
-
-
-
 
 int** InitMatriceMap(int** matrice_Map, int int_mapSize)
 {
@@ -287,9 +280,7 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
     return (matrice_Map);
 }
 
-
-
-int*** Generatematrice_Distance(int int_mapSize, int*** matrice_Distance)
+int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
 {
     for ( int i = 0; i < int_mapSize; i++)
     {
@@ -308,23 +299,30 @@ int*** Generatematrice_Distance(int int_mapSize, int*** matrice_Distance)
     return (matrice_Distance);
 }
 
-void DisplayMatriceDistance(int int_mapSize, int*** matrice_Distance)
-{
-    for(int p = 0; p < int_mapSize; p++)
-    {
-        for ( int m = 0; m < int_mapSize; m++)
-        {
-            printf("[");
-            for ( int n = 0; n < 8; n++)
-            {
-                printf("%d,", matrice_Distance[p][m][n]);
-            }
-            printf("],");
-        }
-    printf("\n");
-    }
-}
+// int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x, int int_CoordPlayer_y) //verifie si la matrice map generer possede un chemin faisable : retourne le booleen correspondant
+// {
+    
+//     int int_maxCoord = count(matrice_Map) - 1;
+//     int bool_notDoable = 0;
+//     switch (int_CoordPlayer_x + int_CoordPlayer_y)
+//     {
+//         case (2*int_maxCoord): //cas ou le player a commencer dans le coin BAS DROITE
+            
+//             break;
 
+//         case (0): //cas ou le player a commencer dans le coin HAUT GAUCHE
+            
+//             break;
+//     default:
+//         break;
+//     }
+
+//     for(int i = int_mapSize-1; i>=0 ; i--){
+//         for(int j = int_mapSize-1 ; j>=0 ;j--){
+//             for(int m = )
+//         }
+//     }
+// }
 
 #endif
 

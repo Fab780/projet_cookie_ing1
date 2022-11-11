@@ -95,4 +95,27 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
     // printf_center("TESTETSTETETETDVGEYGUA\n");
 }
 
+void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance)
+{
+    for(int p = 0; p < int_mapSize; p++)
+    {
+        printf("ligne %d :", p);
+        for ( int m = 0; m < int_mapSize; m++)
+        {
+            printf(" %d :[", m);
+            for ( int n = 0; n < 8; n++)
+            {
+                if(n != 7) {
+                    printf("%d,", matrice_Distance[p][m][n]);
+                } else {
+                    printf("%d", matrice_Distance[p][m][n]);
+                }
+                
+            }
+            printf("],");
+        }
+        printf("\n");
+    }
+}
+
 #endif
