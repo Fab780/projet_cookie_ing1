@@ -1,5 +1,6 @@
 #ifndef INITGAME_H
 #define INITGAME_H
+#define square(a)  (a)*(a)
 
 #include <stdlib.h>
 #include <math.h>
@@ -94,6 +95,51 @@ int** AllocMatriceMap(int int_mapSize)
     }
     return (matrice_Map);
 }
+
+void UnallocMatriceDistance(int*** matrice_Distance, int int_mapSize)
+{
+    for(int i = 0; i<int_mapSize ; i++){
+        for(int j = 0; j< int_mapSize; j++)
+        {
+            free(matrice_Map[i][j]);
+        }
+    }
+    for(int p = 0; p<int_mapSize ; p++){
+        free(matrice_Map[p]);
+    }
+    free(matrice_Map);
+    return;
+}  
+
+
+
+int*** AllocMatriceDistance(int int_mapSize)
+{
+    int*** matrice_Distance = malloc(int_mapSize * int_mapSize *  sizeof(*matrice_Distance));       
+    if(matrice_Distance == NULL){
+        exit(EXIT_FAILURE);
+    } 
+    for(int i=0 ; i < int_mapSize ; i++)
+    {
+        matrice_Distance[i] = malloc(int_mapSize * int_mapSize * sizeof(**matrice_Distance) );      
+        if(matrice_Distance[i] == NULL){  
+            for(i = i-1 ; i >= 0 ; i--) {   
+              free(matrice_Distance[i]);
+            }                                 
+            free(matrice_Distance);
+            exit(EXIT_FAILURE);
+        }       
+        for(int j = 0 ; j < int_mapSize; j++)
+        { 
+            matrice_Distance[i][j] = malloc(int_mapSize * sizeof(***matrice_Distance) );
+        //manque if et free..
+        }
+    }
+    return (matrice_Distance);
+}
+
+
+
 
 int** InitMatriceMap(int** matrice_Map, int int_mapSize)
 {
@@ -201,7 +247,6 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
             int_nbObstacles-- ;
         }
     }
-
     while( int_nbBonus > 0 ) { //Placement des Bonus
         int_rdmRow = RNG(0,int_maxCoord);
         int_rdmCol = RNG(0,int_maxCoord);
@@ -229,6 +274,45 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
     }
     return (matrice_Map);
 }
+
+
+
+int*** Generatematrice_Distance(int int_mapSize, int*** matrice_Distance)
+{
+    for ( int i = 0; i < int_mapSize; i++)
+    {
+        for(int j = 0;j<int_mapSize;j++)
+        {
+        matrice_Distance[i][j][1] = RNG(1,10);
+        matrice_Distance[i][j][3] = RNG(1,10);
+        matrice_Distance[i][j][5] = RNG(1,10);
+        matrice_Distance[i][j][7] = RNG(1,10);
+        matrice_Distance[i][j][0] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][7]));
+        matrice_Distance[i][j][2] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][3]));
+        matrice_Distance[i][j][4] = sqrt(square(matrice_Distance[i][j][3]) + square(matrice_Distance[i][j][5]));
+        matrice_Distance[i][j][6] = sqrt(square(matrice_Distance[i][j][5]) + square(matrice_Distance[i][j][7]));
+        }
+    }
+    return (matrice_Distance);
+}
+
+void DisplayMatriceDistance(int int_mapSize, int*** matrice_Distance)
+{
+    for(int p = 0; p < int_mapSize; p++)
+    {
+        for ( int m = 0; m < int_mapSize; m++)
+        {
+            printf("[");
+            for ( int n = 0; n < 8; n++)
+            {
+                printf("%d,", matrice_Distance[p][m][n]);
+            }
+            printf("],");
+        }
+    printf("\n");
+    }
+}
+
 
 #endif
 
