@@ -3,51 +3,87 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <termios.h>
 #include "Constant.h"
 #include "Miscellanous.h"
 
 
 
+static struct termios old, current; //Je ne sais pas encore si on peut deplacer cette struct (si execution de l'ensemble du prog)
 
-#include <stdio.h>
-#include <termios.h>
+int KeyAvailable(int key)
+{
+    if (key == HAUT || key == BAS || key == GAUCHE || key == DROITE || key == HAUT_GAUCHE || key == HAUT_DROITE || key == BAS_GAUCHE || key == BAS_DROITE || key == RETOUR_ARRIERE || key == SAUVEGARDER) {
+        return 1;
+    }
+    else {
+        printf("Touche invalide : appuyez sur h pour afficher l'aide");
+        return 0;
+    }
+}
 
-// static struct termios old, current;
+void ChangePosition(int key, int* x, int* y) 
+{
+    switch (key)
+    {
+    case HAUT:
+        x=0;
+        y=1;
+        break;
+    case BAS:
+        x=0;
+        y=-1;
+        break;
+    case GAUCHE:
+        x=-1;
+        y=0;
+        break;
+    case DROITE:
+        x=1;
+        y=0;
+        break;
+    case HAUT_GAUCHE:
+        x=-1;
+        y=1;
+        break;
+    case HAUT_DROITE:
+        x=1;
+        y=1;
+        break;
+    case BAS_GAUCHE:
+        x=-1;
+        y=-1;
+        break;
+    case BAS_DROITE:
+        x=1;
+        y=-1;
+        break;
+    default:
+        break; //Retournez dans la fonction ListenKeybooard ? Normaement le default est impossible car gerer par la fonction KeyAvailable()
+    }
+}
 
-// int main() {
-//     FILE* flux = stdin;
-//     tcgetattr(0, &old); /* grab old terminal i/o settings */
-//     current = old; /* make new settings same as old settings */
-//     current.c_lflag &= ~ICANON; /* disable buffered i/o */
-//     current.c_lflag &= ~ECHO; /* set no echo mode */
-//     tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
+int ListenKeyboard()
+{
+    FILE* flux = stdin;
+    tcgetattr(0, &old); /* grab old terminal i/o settings */
+    current = old; /* make new settings same as old settings */
+    current.c_lflag &= ~ICANON; /* disable buffered i/o */
+    current.c_lflag &= ~ECHO; /* set no echo mode */
+    tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
+    int ch;
 
-//     int ch;
-//     ch = getc(flux);
-//     printf("Vous avez appuyé sur la touche %d.\n", ch);
+    do
+    {
+        ch = getc(flux);
+    } while (!KeyAvailable(ch));
 
-//     switch(ch) {
-//     case UP_ARROW:
-//         printf("UP WAS PRESSED\n");
-//         break;
-//     case DOWN_ARROW:
-//         printf("DOWN WAS PRESSED\n");
-//         break;
-//     case LEFT_ARROW:
-//         printf("LEFT WAS PRESSED\n");
-//         break;
-//     case RIGHT_ARROW:
-//         printf("RIGHT WAS PRESSED\n");
-//         break;
-//     default:
-//         printf("SOME OTHER SCROLL KEY PRESSED: %d\n", ch);
-//         break;
-//     }
-//     current.c_lflag |= ECHO; /* set echo mode */
-//     tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
-//     return 0;
-// }
+    current.c_lflag |= ECHO; /* set echo mode */
+    tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
+    return ch;
+}
 
+//ChangePosition(ch, &int_wanted_x, &int_wanted_y); APPELLE DE FONCTION POUR JORDAN C'EST CE QUE TU VEUX ????????????????????????????
 int ** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player) // Met à jour les informations du joueur ainsi que la map en fonction du déplacement
 {   
     matrice_map[s_playerInfo_player->int_x][s_playerInfo_player->int_y] = REP_VOID;
