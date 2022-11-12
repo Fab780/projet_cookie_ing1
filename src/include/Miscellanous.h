@@ -39,4 +39,14 @@ struct PlayerInfo{ // Structure contennant les informations du joueur
     int int_backward;
 };
 
+void DebugInfoPlayer(PlayerInfo s_playerInfo_player)
+{   
+    printf("Votre position x : %d\n",s_playerInfo_player.int_x);
+    printf("Votre position y : %d\n",s_playerInfo_player.int_y);
+    printf("Votre energie : %d\n",s_playerInfo_player.int_energy);
+    printf("Votre distance parcourue : %d\n",s_playerInfo_player.int_distance);
+    printf("Votre energie gagnée : %d\n",s_playerInfo_player.int_gain_energy);
+    printf("Votre energie perdue : %d\n",s_playerInfo_player.int_lost_energy);
+    printf("Vos retour en arrière disponible : %d\n",s_playerInfo_player.int_backward);
+}
 #endif
