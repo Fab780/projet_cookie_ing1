@@ -1,7 +1,5 @@
 
 #Makefile
-#Credit: Maxime Alzoubaidy & Joan Legrand (un peu) 
-#Date : 11/07/21
 #Os : Linux
 
 
