@@ -6,27 +6,6 @@
 #include "Constant.h"
 #include "Miscellanous.h"
 
-void DebugDisplayMap(int** matrice_Map, int int_mapSize)
-{
-    for( int i = 0 ; i<int_mapSize; i++) { 
-        printf("%d> ", i);
-       for( int j = 0 ; j<int_mapSize; j++){
-            printf("%c", matrice_Map[i][j]);
-            if(j != int_mapSize - 1) {
-                printf(",");
-            } else {
-                printf("\n");
-            }
-        }
-        if(i != int_mapSize - 1) {
-            printf(";");
-        } else {
-            printf("\n");
-        }
-    }
-    return;
-}
-
 void DisplayMap(int** matrice_Map, int int_mapSize)
 {
     int int_curseur = 0;
@@ -92,7 +71,31 @@ void DisplayMap(int** matrice_Map, int int_mapSize)
         printf("%s", UPBAR);
     }
     printf("\n");
-    // printf_center("TESTETSTETETETDVGEYGUA\n");
+}
+
+
+
+//Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
+
+void DebugDisplayMap(int** matrice_Map, int int_mapSize)
+{
+    for( int i = 0 ; i<int_mapSize; i++) { 
+        printf("%d> ", i);
+       for( int j = 0 ; j<int_mapSize; j++){
+            printf("%c", matrice_Map[i][j]);
+            if(j != int_mapSize - 1) {
+                printf(",");
+            } else {
+                printf("\n");
+            }
+        }
+        if(i != int_mapSize - 1) {
+            printf(";");
+        } else {
+            printf("\n");
+        }
+    }
+    return;
 }
 
 void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance)
@@ -116,6 +119,19 @@ void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance)
         }
         printf("\n");
     }
+}
+
+
+
+void DebugInfoPlayer(PlayerInfo s_playerInfo_player)
+{   
+    printf("Votre position x : %d\n",s_playerInfo_player.int_x);
+    printf("Votre position y : %d\n",s_playerInfo_player.int_y);
+    printf("Votre energie : %d\n",s_playerInfo_player.int_energy);
+    printf("Votre distance parcourue : %d\n",s_playerInfo_player.int_distance);
+    printf("Votre energie gagnée : %d\n",s_playerInfo_player.int_gain_energy);
+    printf("Votre energie perdue : %d\n",s_playerInfo_player.int_lost_energy);
+    printf("Vos retour en arrière disponible : %d\n",s_playerInfo_player.int_backward);
 }
 
 #endif
