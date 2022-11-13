@@ -299,30 +299,72 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
     return (matrice_Distance);
 }
 
-// int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x, int int_CoordPlayer_y) //verifie si la matrice map generer possede un chemin faisable : retourne le booleen correspondant
-// {
+int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start) //verifie si la matrice map generer possede un chemin faisable recursivement; 
+{
     
-//     int int_maxCoord = count(matrice_Map) - 1;
-//     int bool_notDoable = 0;
-//     switch (int_CoordPlayer_x + int_CoordPlayer_y)
-//     {
-//         case (2*int_maxCoord): //cas ou le player a commencer dans le coin BAS DROITE
-            
-//             break;
+    if( !IsBetween(int_Coordx, 0, int_maxCoord) || !IsBetween(int_Coordy, 0, int_maxCoord)){
+        return 0;
+    }
+    else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_END)){
+        return 1;
+    }else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE2)){
+        return 0;
+    }else{
+        switch(int_Start)
+        {
+            case 1: //le joueur à demarrer en 0,0
+                return (
+                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start )
+                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, int_Start )
+                );
+                break;
+            case 2: //le joueur à demarrer en 0,mapSize
+                return (
+                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start  )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start )
+                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy - 1, int_maxCoord, int_Start )
+                );
+                break;
+            case 3: //le joueur à demarrer en mapSize,0
+                return (
+                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start  )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start )
+                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, int_Start )
+                );
+                break;
+            case 4: //le joueur à demarrer en mapSize, mapSize
+                return (
+                       CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start  )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start )
+                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, int_Start )
+                );
+                break;
+        }
+        
 
-//         case (0): //cas ou le player a commencer dans le coin HAUT GAUCHE
-            
-//             break;
-//     default:
-//         break;
-//     }
+    }
+}
 
-//     for(int i = int_mapSize-1; i>=0 ; i--){
-//         for(int j = int_mapSize-1 ; j>=0 ;j--){
-//             for(int m = )
-//         }
-//     }
-// }
+int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize) //cherche si un chemin est faisable en fonction du placement du player au debut
+{
+    int int_maxCoord = int_mapSize - 1;
+    if(int_CoordPlayer_x == 0){
+        if(int_CoordPlayer_y == 0){
+            return CheckPath(matrice_Map, 0, 0, int_maxCoord, 1);
+        }
+        else {
+            return CheckPath(matrice_Map, 0, int_maxCoord, int_maxCoord, 2);
+        }
+    } else {
+        if(int_CoordPlayer_y == 0){
+            return CheckPath(matrice_Map, int_maxCoord, 0, int_maxCoord, 3);
+        }
+        else {
+            return CheckPath(matrice_Map, int_maxCoord, int_maxCoord, int_maxCoord, 4);
+        }
+    }
+}
 
 #endif
 
