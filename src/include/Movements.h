@@ -40,7 +40,7 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
     case BAS:
         *x=*x+1;
         break;
-    case BAS_DROITE:
+    case HAUT_GAUCHE:
         *x=*x-1;
         *y=*y-1;
         break;
@@ -52,7 +52,7 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
         *x=*x-1;
         *y=*y+1;
         break;
-    case HAUT_GAUCHE:
+    case BAS_DROITE:
         *x=*x+1;
         *y=*y+1;
         break;
