@@ -285,18 +285,51 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
     for ( int i = 0; i < int_mapSize; i++)
     {
         for(int j = 0;j<int_mapSize;j++)
-        {
-        matrice_Distance[i][j][1] = RNG(1,10);
-        matrice_Distance[i][j][3] = RNG(1,10);
-        matrice_Distance[i][j][5] = RNG(1,10);
-        matrice_Distance[i][j][7] = RNG(1,10);
+        {   
+        if (i == 0){
+            matrice_Distance[i][j][1] = RNG(1,10);
+        }else{
+            if (matrice_Distance[i-1][j][5] == 0){
+                matrice_Distance[i][j][1] = RNG(1,10);
+            }else{
+                matrice_Distance[i][j][1] = matrice_Distance[i-1][j][5];
+            }
+        }
+        if (i == (int_mapSize-1)){
+            matrice_Distance[i][j][5] = RNG(1,10);
+        }else{
+            if (matrice_Distance[i+1][j][1] == 0){
+               matrice_Distance[i][j][5] = RNG(1,10);
+            }else{
+                matrice_Distance[i][j][5] = matrice_Distance[i+1][j][1];
+            }
+        }    
+        if (j == 0){
+            matrice_Distance[i][j][7] = RNG(1,10);
+        }else{
+            if (matrice_Distance[i][j-1][3] == 0){
+                matrice_Distance[i][j][7] = RNG(1,10);
+            }else{
+                matrice_Distance[i][j][7] = matrice_Distance[i][j-1][3];
+            }
+        }
+        if (j == (int_mapSize-1)){
+            matrice_Distance[i][j][3] = RNG(1,10);
+        }else{
+            if (matrice_Distance[i][j+1][3] == 0){
+                matrice_Distance[i][j][3] = RNG(1,10);
+            }else{
+                matrice_Distance[i][j][3] = matrice_Distance[i][j+1][7];
+            }
+        }
         matrice_Distance[i][j][0] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][7]));
         matrice_Distance[i][j][2] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][3]));
         matrice_Distance[i][j][4] = sqrt(square(matrice_Distance[i][j][3]) + square(matrice_Distance[i][j][5]));
         matrice_Distance[i][j][6] = sqrt(square(matrice_Distance[i][j][5]) + square(matrice_Distance[i][j][7]));
         }
     }
-    return (matrice_Distance);
+   return (matrice_Distance);
+
 }
 
 int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start) //verifie si la matrice map generer possede un chemin faisable recursivement; 
