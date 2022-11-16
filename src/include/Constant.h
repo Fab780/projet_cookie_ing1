@@ -42,15 +42,27 @@
     #define DOWNBAR "\uff3f"
     #define UPBAR "\uffe3"
 
-    #define HAUT 122
-    #define BAS  120
-    #define GAUCHE  113
-    #define DROITE 100
-    #define HAUT_GAUCHE 97
-    #define HAUT_DROITE  101
-    #define BAS_GAUCHE  119
-    #define BAS_DROITE 99
-    #define RETOUR_ARRIERE 114
-    #define SAUVEGARDER 112
+    #define UP_ARROW "\U00002191"
+    #define DOWN_ARROW "\U00002193"
+    #define LEFT_ARROW "\U00002190"
+    #define RIGHT_ARROW "\U00002192"
+    #define UP_LEFT_ARROW "\U00002196"
+    #define UP_RIGHT_ARROW "\U00002197"
+    #define DOWN_LEFT_ARROW "\U00002199"
+    #define DOWN_RIGHT_ARROW "\U00002198"
+    #define STEP_BACK_ICON "\U000027f2"
+    #define SAVE_ICON "\U0001f4be"
+
+
+    #define UP 122
+    #define DOWN  120
+    #define LEFT  113
+    #define RIGHT 100
+    #define UP_LEFT 97
+    #define UP_RIGHT  101
+    #define DOWN_LEFT  119
+    #define DOWN_RIGHT 99
+    #define STEP_BACK 114
+    #define SAVE 112
 
 #endif
