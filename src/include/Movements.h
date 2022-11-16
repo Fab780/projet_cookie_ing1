@@ -9,66 +9,85 @@
 
 
 
-static struct termios old, current; //Je ne sais pas encore si on peut deplacer cette struct (si execution de l'ensemble du prog)
+static struct termios old, current; //Structure qui permet de garder les deux états paramètres du terminal
 
+//Verifie la touche pressée
 int KeyAvailable(int key)
 {
-    if (key == HAUT || key == BAS || key == GAUCHE || key == DROITE || key == HAUT_GAUCHE || key == HAUT_DROITE || key == BAS_GAUCHE || key == BAS_DROITE || key == RETOUR_ARRIERE || key == SAUVEGARDER) {
+    if (key == UP || key == DOWN || key == LEFT || key == RIGHT || key == UP_LEFT || key == UP_RIGHT || key == DOWN_LEFT || key == DOWN_RIGHT || key == STEP_BACK || key == SAVE) {
         return 1;
     }
     else {
-        printf("Touche invalide : appuyez sur h pour afficher l'aide");
         return 0;
     }
 }
 
+//Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
 void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player) 
 {
     *x=s_playerInfo_player->int_x;
     *y=s_playerInfo_player->int_y;
     switch (key)
     {
-    case GAUCHE:
+    case LEFT:
         *y=*y-1;
         break;
-    case DROITE:
+    case RIGHT:
         *y=*y+1;
         break;
-    case HAUT:
+    case UP:
         *x=*x-1;
         break;
-    case BAS:
+    case DOWN:
         *x=*x+1;
         break;
-    case HAUT_GAUCHE:
+    case UP_LEFT:
         *x=*x-1;
         *y=*y-1;
         break;
-    case BAS_GAUCHE:
+    case DOWN_LEFT:
         *x=*x+1;
         *y=*y-1;
         break;
-    case HAUT_DROITE:
+    case UP_RIGHT:
         *x=*x-1;
         *y=*y+1;
         break;
-    case BAS_DROITE:
+    case DOWN_RIGHT:
         *x=*x+1;
         *y=*y+1;
         break;
     default:
-        break; //Retournez dans la fonction ListenKeybooard ? Normaement le default est impossible car gerer par la fonction KeyAvailable()
+        break;
     }
 }
 
+//Affiche les touches pour les coups dispos (et leur coup en distance)
+void ShowKeyAvailable()
+{
+    printf("\nListe des touches :\n\n");
+    printf("%s : e\t\t", UP_RIGHT_ARROW);
+    printf("%s : a\t\t", UP_LEFT_ARROW);
+    printf("%s : z\t\t", UP_ARROW);
+    printf("%s : p\n", SAVE_ICON);
+    printf("%s : d\t\t", RIGHT_ARROW);
+    printf("%s : q\t\t", LEFT_ARROW);
+    printf("%s : x\n", DOWN_ARROW);
+    printf("%s : c\t\t", DOWN_RIGHT_ARROW);
+    printf("%s : w\t\t", DOWN_LEFT_ARROW);
+    printf("%s : r\t\t\n", STEP_BACK_ICON);
+}
+
+//Permet de lire la touche pressé. Le programme est en pause tant que utilisateur appuie touche
 int ListenKeyboard()
 {
     FILE* flux = stdin;
-    tcgetattr(0, &old); /* grab old terminal i/o settings */
-    current = old; /* make new settings same as old settings */
-    current.c_lflag &= ~ICANON; /* disable buffered i/o */
-    current.c_lflag &= ~ECHO; /* set no echo mode */
-    tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
+    tcgetattr(0, &old); //On recupere les propriétés actuelles du terminal
+    current = old; //on les stock dans une variable
+    current.c_lflag &= ~ICANON; //desactive input/output du terminal
+    current.c_lflag &= ~ECHO; //Active le mode silencieux (pas de sortie texte du terminal)
+    tcsetattr(0, TCSANOW, &current); //Applique ces modifications sur le terminal
+    ShowKeyAvailable();
     int ch;
 
     do
@@ -76,14 +95,12 @@ int ListenKeyboard()
         ch = getc(flux);
     } while (!KeyAvailable(ch));
 
-    current.c_lflag |= ECHO; /* set echo mode */
-    tcsetattr(0, TCSANOW, &current); /* use these new terminal i/o settings now */
+    current.c_lflag |= ECHO; //desactive le mode silencieux
+    tcsetattr(0, TCSANOW, &current); //Applique cette modification sur le terminal
     return ch;
 }
 
-//int key_pressed;
-//key_pressed = ListenKeyboard()
-//ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y); APPELLE DE FONCTION POUR JORDAN C'EST CE QUE TU VEUX ????????????????????????????
+
 
 int ** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player) // Met à jour les informations de la map en fonction du déplacement
 {   
