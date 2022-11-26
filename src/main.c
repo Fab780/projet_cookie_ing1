@@ -18,22 +18,12 @@ int main(void)
     s_playerInfo_player.int_energy = InitEnergy(int_mapSize, s_playerInfo_player.int_energy);
     int int_victory = 0;
 
-    int** matrice_Map = AllocMatriceMap(int_mapSize);
-    matrice_Map = InitMatriceMap(matrice_Map, int_mapSize);
-    int*** matrice_Distance= AllocMatriceDistance(int_mapSize);
-
     srand(time(NULL)); //init RNG
-    
-    int bool_mapDoable = 0;
-    while(!bool_mapDoable)  //Generation d'une Map Faisable
-    {
-        matrice_Map = InitMatriceMap(matrice_Map, int_mapSize);
-        matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, &s_playerInfo_player);
-        bool_mapDoable = CheckMapDoable(matrice_Map, s_playerInfo_player.int_x, s_playerInfo_player.int_y, int_mapSize);
-    }
-    
-    matrice_Distance = GenerateMatriceDistance(int_mapSize, matrice_Distance);
-
+    int** matrice_Map = InitMap(int_mapSize, 
+                                float_diffRate,
+                                &s_playerInfo_player);
+    int*** matrice_Distance = InitDistance(int_mapSize);
+ 
     DisplayMap(matrice_Map, int_mapSize);
     //DebugDisplayMatriceDistance(int_mapSize, matrice_Distance);
     printf("Votre energie : %d\n",s_playerInfo_player.int_energy);
