@@ -26,9 +26,12 @@
 
     int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
-    int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start); //verifie si la matrice map generer possede un chemin faisable recursivement; 
+    int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_remainEnergy); //verifie si la matrice map generer possede un chemin faisable recursivement; 
 
-    int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize); //cherche si un chemin est faisable en fonction du placement du player au debut
+    int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize, int int_baseEnergy); //cherche si un chemin est faisable en fonction du placement du player au debut
 
+    int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo_player); //Alloue, init et genere la map
+
+    int*** InitDistance(int int_mapSize); //Alloue, et genere la matrice Distance
 #endif
 
