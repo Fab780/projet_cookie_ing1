@@ -434,8 +434,8 @@ int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo_pl
         matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, p_playerInfo_player);
         DisplayMap(matrice_Map,int_mapSize);
         bool_mapDoable = CheckMapDoable(matrice_Map,
-                                        p_playerInfo_player->int_x,
-                                        p_playerInfo_player->int_y,
+                                        p_playerInfo_player->coordonnees_player.int_x,
+                                        p_playerInfo_player->coordonnees_player.int_y,
                                         int_mapSize, 
                                         &int_EnergyNeeded);
     }
