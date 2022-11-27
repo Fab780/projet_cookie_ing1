@@ -1,72 +1,66 @@
 #include "Display.h"
 
+
+
 void DisplayMap(int** matrice_Map, int int_mapSize)
 {
     int int_curseur = 0;
     char* constant_caseDisplay = ERROR;
-
     system("clear");
-    for(int i=0; i<int_mapSize*3; i++)
+    printf(" ");
+    for(int i=0; i<int_mapSize+1; i++)
     {
         printf("%s", DOWNBAR);
     }
     printf("\n");
     for(int int_curseurBis = 0; int_curseurBis < int_mapSize; int_curseurBis++)
     {
+        printf(" %s", SIDEBAR);
         while ( (int_curseur+1)%(int_mapSize+1) != 0 )
         {
             switch (matrice_Map[int_curseurBis][int_curseur])
             {
                 case REP_CHARACTER :
                     constant_caseDisplay = CHARACTERE;
-                    break;
-                
+                    break;                
                 case REP_END :
                     constant_caseDisplay = END;
-                    break;
-                
+                    break;                
                 case REP_BONUS1 :
                     constant_caseDisplay = BONUS_COOKIE;
-                    break;
-                
+                    break;                
                 case REP_BONUS2 :
                     constant_caseDisplay = BONUS_APPLE;
-                    break;
-                
+                    break;                
                 case REP_OBSTACLE1 :
                     constant_caseDisplay = OBSTACLE_TREE;
                     break;
-
                 case REP_OBSTACLE2 :
                     constant_caseDisplay = OBSTACLE_BEE;
-                    break;
-                
+                    break;                
                 case REP_VOID :
                     constant_caseDisplay = VOID;
                     break;
-
                 case REP_DEFAULT :
                     constant_caseDisplay = ERROR;
-                    break;
-                
+                    break;           
                 default :
                     constant_caseDisplay = ERROR;
-                    break;
-            
+                    break;       
             }
-            printf("%s%s%s", CORNER_LEFT, constant_caseDisplay, CORNER_RIGHT);
+            printf("%s", constant_caseDisplay);
             int_curseur++;
         }
-        printf("\n");
+        printf("%s\n", SIDEBAR);
         int_curseur = 0;
     }
-    for(int i=0; i<int_mapSize*3; i++)
+    printf(" ");
+    for(int i=0; i<int_mapSize+1; i++)
     {
         printf("%s", UPBAR);
     }
     printf("\n");
 }
-
 
 
 //Fonctions de DEBUG pour dev, ne serons pas utiliser dans le process final
