@@ -83,23 +83,23 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
 void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
 {
     printf("\nListe des touches :\n\n");
-    printf("%s : a  (%d kilomètres)", UP_LEFT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][0]);
+    printf("%s : a  (%d kilomètres)", UP_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][0]);
     printf("\t\t");
-    printf("%s : e  (%d kilomètres)", UP_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][2]);
+    printf("%s : e  (%d kilomètres)", UP_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][2]);
     printf("\t\t");
-    printf("%s : z  (%d kilomètres)", UP_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][1]);
+    printf("%s : z  (%d kilomètres)", UP_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][1]);
     printf("\t\t");
     printf("%s : p ", SAVE_ICON);
     printf("\n\n");
-    printf("%s : q  (%d kilomètres)", LEFT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][7]);
+    printf("%s : q  (%d kilomètres)", LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][7]);
     printf("\t\t");
-    printf("%s : d  (%d kilomètres)", RIGHT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][3]);
+    printf("%s : d  (%d kilomètres)", RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][3]);
     printf("\t\t");
-    printf("%s : x  (%d kilomètres)", DOWN_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][5]);
+    printf("%s : x  (%d kilomètres)", DOWN_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][5]);
     printf("\n\n");
-    printf("%s : w  (%d kilomètres)", DOWN_LEFT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][6]);
+    printf("%s : w  (%d kilomètres)", DOWN_LEFT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][6]);
     printf("\t\t");
-    printf("%s : c  (%d kilomètres)", DOWN_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][4]);
+    printf("%s : c  (%d kilomètres)", DOWN_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->coordonnees_player.int_x][p_playerInfo_player->coordonnees_player.int_y][4]);
     printf("\t\t");
     printf("%s : r ", STEP_BACK_ICON);
     printf("\t\t\n");
