@@ -3,7 +3,7 @@
 //Verifie la touche pressée
 int KeyAvailable(int key)
 {
-    if (key == UP || key == DOWN || key == LEFT || key == RIGHT || key == UP_LEFT || key == UP_RIGHT || key == DOWN_LEFT || key == DOWN_RIGHT || key == STEP_BACK || key == SAVE) {
+    if (key == UP || key == MAJ_UP || key == DOWN || key == MAJ_DOWN ||key == LEFT || key == MAJ_LEFT ||key == RIGHT || key == MAJ_RIGHT ||key == UP_LEFT || key == MAJ_UP_LEFT ||key == UP_RIGHT || key == MAJ_UP_RIGHT || key == DOWN_LEFT || key == MAJ_DOWN_LEFT || key == DOWN_RIGHT || key == MAJ_DOWN_RIGHT || key == STEP_BACK || key == MAJ_STEP_BACK || key == SAVE || key == MAJ_SAVE || key == LEAVE_WITHOUT_SAVE || key == MAJ_LEAVE_WITHOUT_SAVE) {
         return 1;
     }
     else {
