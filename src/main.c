@@ -11,7 +11,6 @@ int main(void)
     float float_diffRate = ChooseDifficulty();
     int int_mapSize = ChooseMapSize();
     PlayerInfo s_playerInfo_player = SetupPlayer(); 
-    s_playerInfo_player.int_energy = InitEnergy(int_mapSize);
     int int_victory = 0;
     
     InitRNG();
