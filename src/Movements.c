@@ -55,16 +55,26 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
 void ShowKeyAvailable()
 {
     printf("\nListe des touches :\n\n");
-    printf("%s : e\t\t", UP_RIGHT_ARROW);
-    printf("%s : a\t\t", UP_LEFT_ARROW);
-    printf("%s : z\t\t", UP_ARROW);
-    printf("%s : p\n", SAVE_ICON);
-    printf("%s : d\t\t", RIGHT_ARROW);
-    printf("%s : q\t\t", LEFT_ARROW);
-    printf("%s : x\n", DOWN_ARROW);
-    printf("%s : c\t\t", DOWN_RIGHT_ARROW);
-    printf("%s : w\t\t", DOWN_LEFT_ARROW);
-    printf("%s : r\t\t\n", STEP_BACK_ICON);
+    printf("%s : e", UP_RIGHT_ARROW);
+    printf("\t\t");
+    printf("%s : a", UP_LEFT_ARROW);
+    printf("\t\t");
+    printf("%s : z", UP_ARROW);
+    printf("\t\t");
+    printf("%s : p", SAVE_ICON);
+    printf("\n\n");
+    printf("%s : d", RIGHT_ARROW);
+    printf("\t\t");
+    printf("%s : q", LEFT_ARROW);
+    printf("\t\t");
+    printf("%s : x", DOWN_ARROW);
+    printf("\n\n");
+    printf("%s : c", DOWN_RIGHT_ARROW);
+    printf("\t\t");
+    printf("%s : w", DOWN_LEFT_ARROW);
+    printf("\t\t");
+    printf("%s : r", STEP_BACK_ICON);
+    printf("\t\t\n");
 }
 
 //Permet de lire la touche pressé. Le programme est en pause tant que utilisateur appuie touche
