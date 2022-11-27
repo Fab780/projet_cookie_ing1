@@ -52,28 +52,28 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
 }
 
 //Affiche les touches pour les coups dispos (et leur coup en distance)
-void ShowKeyAvailable()
+void ShowKeyAvailable(PlayerInfo *p_playerInfo_player,  int*** matrice_Distance)
 {
     printf("\nListe des touches :\n\n");
-    printf("%s : e", UP_RIGHT_ARROW);
+    printf("%s : a  (%d kilomètres)", UP_LEFT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][0]);
     printf("\t\t");
-    printf("%s : a", UP_LEFT_ARROW);
+    printf("%s : e  (%d kilomètres)", UP_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][2]);
     printf("\t\t");
-    printf("%s : z", UP_ARROW);
+    printf("%s : z  (%d kilomètres)", UP_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][1]);
     printf("\t\t");
-    printf("%s : p", SAVE_ICON);
+    printf("%s : p ", SAVE_ICON);
     printf("\n\n");
-    printf("%s : d", RIGHT_ARROW);
+    printf("%s : q  (%d kilomètres)", LEFT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][7]);
     printf("\t\t");
-    printf("%s : q", LEFT_ARROW);
+    printf("%s : d  (%d kilomètres)", RIGHT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][3]);
     printf("\t\t");
-    printf("%s : x", DOWN_ARROW);
+    printf("%s : x  (%d kilomètres)", DOWN_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][5]);
     printf("\n\n");
-    printf("%s : c", DOWN_RIGHT_ARROW);
+    printf("%s : w  (%d kilomètres)", DOWN_LEFT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][6]);
     printf("\t\t");
-    printf("%s : w", DOWN_LEFT_ARROW);
+    printf("%s : c  (%d kilomètres)", DOWN_RIGHT_ARROW, matrice_Distance[p_playerInfo_player->int_x][p_playerInfo_player->int_y][4]);
     printf("\t\t");
-    printf("%s : r", STEP_BACK_ICON);
+    printf("%s : r ", STEP_BACK_ICON);
     printf("\t\t\n");
 }
 
@@ -86,7 +86,6 @@ int ListenKeyboard()
     current.c_lflag &= ~ICANON; //desactive input/output du terminal
     current.c_lflag &= ~ECHO; //Active le mode silencieux (pas de sortie texte du terminal)
     tcsetattr(0, TCSANOW, &current); //Applique ces modifications sur le terminal
-    ShowKeyAvailable();
     int ch;
 
     do
