@@ -129,13 +129,13 @@ void UnallocMatriceDistance(int*** matrice_Distance, int int_mapSize)
 
 int*** AllocMatriceDistance(int int_mapSize) 
 {
-    int*** matrice_Distance = malloc(8 * int_mapSize * int_mapSize *  sizeof(*matrice_Distance));       
+    int*** matrice_Distance = malloc(8 * int_mapSize * int_mapSize *  sizeof(*matrice_Distance));       //allocation mémoire a la matrice
     if(matrice_Distance == NULL){
         exit(EXIT_FAILURE);
     } 
     for(int i=0 ; i < int_mapSize ; i++)
     {
-        matrice_Distance[i] = malloc(8 * int_mapSize * sizeof(**matrice_Distance) );      
+        matrice_Distance[i] = malloc(8 * int_mapSize * sizeof(**matrice_Distance) );         //allocation mémoire a la matrice (chaques lignes)
         if(matrice_Distance[i] == NULL){  
             for(i = i-1 ; i >= 0 ; i--) {   
               free(matrice_Distance[i]);
@@ -145,7 +145,7 @@ int*** AllocMatriceDistance(int int_mapSize)
         }       
         for(int j = 0 ; j < int_mapSize; j++)
         { 
-            matrice_Distance[i][j] = malloc(8 * sizeof(***matrice_Distance) );
+            matrice_Distance[i][j] = malloc(8 * sizeof(***matrice_Distance) );       //allocation mémoire a la matrice (chaques cases)
             if(matrice_Distance[i][j] == NULL) 
             {
                 for(i = i-1 ; i >= 0 ; i--) 
@@ -158,21 +158,15 @@ int*** AllocMatriceDistance(int int_mapSize)
                  }
                 free(matrice_Distance);
                 exit(EXIT_FAILURE);
-            } 
+            }else{
+                 for(int int_compteur = 0 ; int_compteur< 8; int_compteur++)      //Boucles initialisation matrices a 0 partout
+                {
+                matrice_Distance[i][j][int_compteur] = 0;
+                }
+            }
         }
     }
     return (matrice_Distance);
-}
-
-int** InitMatriceMap(int** matrice_Map, int int_mapSize)
-{
-    
-    for(int i=0; i<int_mapSize ; i++){
-        for(int j=0; j<int_mapSize ; j++){
-            matrice_Map[i][j] = REP_DEFAULT;
-        }
-    }
-    return (matrice_Map);
 }
 
 int ** PlaceObstacle(int** matrice_Map, int int_row, int int_col, int int_mapSize, float float_diffRate, int int_distBase, int constant_rep) // place un obstacle et en fonction du difficulty rate, de la taille de la map et de la RNG crée une "fillon" d'obstacles
@@ -300,54 +294,99 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
 
 int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
 {
-    for ( int i = 0; i < int_mapSize; i++)
+    for ( int i = 0; i < int_mapSize; i++)  // boucle vérification des lignes 
     {
-        for(int j = 0;j<int_mapSize;j++)
+        for(int j = 0;j<int_mapSize;j++)    // Boucle vérification des colonnes 
         {   
         if (i == 0){
-            matrice_Distance[i][j][1] = RNG(1,10);
+            matrice_Distance[i][j][1] = 0;
+            matrice_Distance[i][j][0] = 0;
+            matrice_Distance[i][j][2] = 0;
         }else{
             if (matrice_Distance[i-1][j][5] == 0){
                 matrice_Distance[i][j][1] = RNG(1,10);
             }else{
                 matrice_Distance[i][j][1] = matrice_Distance[i-1][j][5];
+            } 
+            if (j == 0)
+            {
+                matrice_Distance[i][j][0] = 0;
+                matrice_Distance[i][j][6] = 0;
+            }else{
+                if (matrice_Distance[i-1][j-1][4] == 0)
+                {
+                    matrice_Distance[i][j][0] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][0] = matrice_Distance[i-1][j-1][4];
+                }
+            }        
+            if(j == int_mapSize-1)
+            {
+                matrice_Distance[i][j][2] = 0;
+                matrice_Distance[i][j][4] = 0;
+            }else{
+                if (matrice_Distance[i-1][j+1][6] ==0)
+                {
+                    matrice_Distance[i][j][2] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][2] = matrice_Distance[i-1][j+1][6];
+                }
             }
         }
         if (i == (int_mapSize-1)){
-            matrice_Distance[i][j][5] = RNG(1,10);
-        }else{
+            matrice_Distance[i][j][5] = 0;
+            matrice_Distance[i][j][4] = 0;
+            matrice_Distance[i][j][6] = 0;
+        }else{       
             if (matrice_Distance[i+1][j][1] == 0){
                matrice_Distance[i][j][5] = RNG(1,10);
             }else{
                 matrice_Distance[i][j][5] = matrice_Distance[i+1][j][1];
             }
+            if (j == 0)
+            {
+                matrice_Distance[i][j][6] = 0;
+            }else{
+                if (matrice_Distance[i+1][j-1][2] == 0)
+                {
+                    matrice_Distance[i][j][6] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][6] = matrice_Distance[i+1][j-1][2];
+                }
+            }
+            if(j == int_mapSize-1)
+            {
+                matrice_Distance[i][j][4] = 0;
+            }else{
+                if (matrice_Distance[i+1][j+1][0] == 0)
+                {
+                    matrice_Distance[i][j][4] = RNG(1,10);
+                }else{
+                    matrice_Distance[i][j][4] = matrice_Distance[i+1][j+1][0];
+                }
+            }
         }    
         if (j == 0){
-            matrice_Distance[i][j][7] = RNG(1,10);
+            matrice_Distance[i][j][7] = 0;
         }else{
             if (matrice_Distance[i][j-1][3] == 0){
                 matrice_Distance[i][j][7] = RNG(1,10);
             }else{
-                matrice_Distance[i][j][7] = matrice_Distance[i][j-1][3];
+               matrice_Distance[i][j][7] = matrice_Distance[i][j-1][3];
             }
         }
         if (j == (int_mapSize-1)){
-            matrice_Distance[i][j][3] = RNG(1,10);
+            matrice_Distance[i][j][3] = 0;
         }else{
             if (matrice_Distance[i][j+1][3] == 0){
                 matrice_Distance[i][j][3] = RNG(1,10);
             }else{
                 matrice_Distance[i][j][3] = matrice_Distance[i][j+1][7];
             }
-        }
-        matrice_Distance[i][j][0] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][7]));
-        matrice_Distance[i][j][2] = sqrt(square(matrice_Distance[i][j][1]) + square(matrice_Distance[i][j][3]));
-        matrice_Distance[i][j][4] = sqrt(square(matrice_Distance[i][j][3]) + square(matrice_Distance[i][j][5]));
-        matrice_Distance[i][j][6] = sqrt(square(matrice_Distance[i][j][5]) + square(matrice_Distance[i][j][7]));
+            }
         }
     }
    return (matrice_Distance);
-
 }
 
 int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_ActEnergy, int* p_intEnergyNeeded) //verifie si la matrice map generer possede un chemin faisable recursivement; 
