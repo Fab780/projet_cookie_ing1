@@ -117,8 +117,8 @@ void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance)
 
 void DebugInfoPlayer(PlayerInfo s_playerInfo_player)
 {   
-    printf("Votre position x : %d\n",s_playerInfo_player.int_x);
-    printf("Votre position y : %d\n",s_playerInfo_player.int_y);
+    printf("Votre position x : %d\n",s_playerInfo_player.coordonnees_player.int_x);
+    printf("Votre position y : %d\n",s_playerInfo_player.coordonnees_player.int_y);
     printf("Votre energie : %d\n",s_playerInfo_player.int_energy);
     printf("Votre distance parcourue : %d\n",s_playerInfo_player.int_distance);
     printf("Votre energie gagnée : %d\n",s_playerInfo_player.int_gain_energy);

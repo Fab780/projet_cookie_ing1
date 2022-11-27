@@ -14,8 +14,8 @@ int KeyAvailable(int key)
 //Change les valeur des variables dans UpdatePosition pour changer la position du personnage dans la matrice map
 void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player) 
 {
-    *x=s_playerInfo_player->int_x;
-    *y=s_playerInfo_player->int_y;
+    *x=s_playerInfo_player->coordonnees_player.int_x;
+    *y=s_playerInfo_player->coordonnees_player.int_y;
     switch (key)
     {
     case LEFT:
@@ -93,15 +93,15 @@ int ListenKeyboard()
 
 int** UpdatePosition(int** matrice_map, int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player) // Met à jour les informations de la map en fonction du déplacement
 {   
-    matrice_map[s_playerInfo_player->int_x][s_playerInfo_player->int_y] = REP_VOID;
+    matrice_map[s_playerInfo_player->coordonnees_player.int_x][s_playerInfo_player->coordonnees_player.int_y] = REP_VOID;
     matrice_map[int_wanted_x][int_wanted_y] = REP_CHARACTER;
     return (matrice_map);
 }
 
 void UpdatePlayerInfo(int int_wanted_x, int int_wanted_y, PlayerInfo *s_playerInfo_player)//Met à jour les infos du joueur en fonction du déplacement
 {
-    s_playerInfo_player->int_x = int_wanted_x;
-    s_playerInfo_player->int_y = int_wanted_y;
+    s_playerInfo_player->coordonnees_player.int_x = int_wanted_x;
+    s_playerInfo_player->coordonnees_player.int_y = int_wanted_y;
     s_playerInfo_player->int_energy = (s_playerInfo_player->int_energy) - LOST_ENERGY;
     s_playerInfo_player->int_distance = s_playerInfo_player->int_distance + 1;
 }

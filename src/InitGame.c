@@ -3,9 +3,9 @@
 PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
 {
     PlayerInfo playerInfo_player;
-    playerInfo_player.int_x=0;
-    playerInfo_player.int_y=0;
-    playerInfo_player.int_energy=0;
+    playerInfo_player.coordonnees_player.int_x = 0;
+    playerInfo_player.coordonnees_player.int_y = 0;
+    playerInfo_player.int_energy=BASE_ENERGY;
     playerInfo_player.int_distance=0;
     playerInfo_player.int_gain_energy=0;
     playerInfo_player.int_lost_energy=0;
@@ -200,20 +200,20 @@ int** GenerateMap(int** matrice_Map, int int_mapSize, float float_diffRate, Play
     {
     case 2:
         matrice_Map[int_maxCoord][0]= REP_CHARACTER;
-        s_playerInfo_player->int_x = int_maxCoord;//on donne les informations du placement du personnage dans le récapitulatif des informations du joueur
+        s_playerInfo_player->coordonnees_player.int_x = int_maxCoord;//on donne les informations du placement du personnage dans le récapitulatif des informations du joueur
         int_rdmRow = RNG( 0, int_qrtCoord );
         int_rdmCol = RNG( int_maxCoord - int_qrtCoord + int_rdmRow - int_qrtCoord, int_maxCoord);
         break;
     case 3:
         matrice_Map[0][int_maxCoord]= REP_CHARACTER;
-        s_playerInfo_player->int_y = int_maxCoord;
+        s_playerInfo_player->coordonnees_player.int_y = int_maxCoord;
         int_rdmRow = RNG( int_maxCoord - int_qrtCoord, int_maxCoord );
         int_rdmCol = RNG( 0, int_rdmRow - int_maxCoord + int_qrtCoord );
         break;
     case 4:
         matrice_Map[int_maxCoord][int_maxCoord]= REP_CHARACTER;
-        s_playerInfo_player->int_x = int_maxCoord;
-        s_playerInfo_player->int_y = int_maxCoord;
+        s_playerInfo_player->coordonnees_player.int_x = int_maxCoord;
+        s_playerInfo_player->coordonnees_player.int_y = int_maxCoord;
         int_rdmRow = RNG( 0, int_qrtCoord );
         int_rdmCol = RNG( 0, int_qrtCoord - int_rdmRow );
         break;
@@ -400,8 +400,8 @@ int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo_pl
         matrice_Map = InitMatriceMap(matrice_Map, int_mapSize);
         matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, p_playerInfo_player);
         bool_mapDoable = CheckMapDoable(matrice_Map,
-                                        p_playerInfo_player->int_x,
-                                        p_playerInfo_player->int_y,
+                                        p_playerInfo_player->coordonnees_player.int_x,
+                                        p_playerInfo_player->coordonnees_player.int_y,
                                         int_mapSize, 
                                         p_playerInfo_player->int_energy);
     }

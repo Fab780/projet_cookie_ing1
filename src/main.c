@@ -25,10 +25,23 @@ int main(void)
     //DebugDisplayMatriceDistance(int_mapSize, matrice_Distance);
     printf("Votre energie : %d\n",s_playerInfo_player.int_energy);
 
+    // coordonnees coordonnees_player;
+    // coordonnees_player.int_x = 0;
+    // coordonnees_player.int_y = 1;
+    // List *list = emptyList();
+    // list = addnode(list, coordonnees_player);
+    // printList(list);
+    // coordonnees_player.int_x = 5;
+    // coordonnees_player.int_y = 10;
+    // list = addnode(list, coordonnees_player);
+    // printList(list);
+    // list = freeLastCoord(list);
+    // printList(list);
+
     int key_pressed;
     int int_wanted_x;
     int int_wanted_y;
-    while(int_victory == 0){
+    while(int_victory == 0 && s_playerInfo_player.int_energy > 0){
         key_pressed = ListenKeyboard();
         ChangePosition(key_pressed, &int_wanted_x, &int_wanted_y, &s_playerInfo_player); 
         matrice_Map = AfterMovement(matrice_Map, int_wanted_x, int_wanted_y, &s_playerInfo_player, int_mapSize, &int_victory);
