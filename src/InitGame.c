@@ -169,6 +169,16 @@ int*** AllocMatriceDistance(int int_mapSize)
     return (matrice_Distance);
 }
 
+int** InitMatriceMap(int** matrice_Map, int int_mapSize)
+{
+    for(int i=0; i<int_mapSize ; i++){
+        for(int j=0; j<int_mapSize ; j++){
+            matrice_Map[i][j] = REP_DEFAULT;
+        }
+    }
+    return (matrice_Map);
+}
+
 int ** PlaceObstacle(int** matrice_Map, int int_row, int int_col, int int_mapSize, float float_diffRate, int int_distBase, int constant_rep) // place un obstacle et en fonction du difficulty rate, de la taille de la map et de la RNG crée une "fillon" d'obstacles
 {   
     matrice_Map[int_row][int_col] = constant_rep ;
