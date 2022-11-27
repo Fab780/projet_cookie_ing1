@@ -21,16 +21,32 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
     case LEFT:
         *y=*y-1;
         break;
+    case MAJ_LEFT:
+        *y=*y-1;
+        break;
     case RIGHT:
+        *y=*y+1;
+        break;
+    case MAJ_RIGHT:
         *y=*y+1;
         break;
     case UP:
         *x=*x-1;
         break;
+    case MAJ_UP:
+        *x=*x-1;
+        break;
     case DOWN:
         *x=*x+1;
         break;
+    case MAJ_DOWN:
+        *x=*x+1;
+        break;
     case UP_LEFT:
+        *x=*x-1;
+        *y=*y-1;
+        break;
+    case MAJ_UP_LEFT:
         *x=*x-1;
         *y=*y-1;
         break;
@@ -38,11 +54,23 @@ void ChangePosition(int key, int* x, int* y, PlayerInfo *s_playerInfo_player)
         *x=*x+1;
         *y=*y-1;
         break;
+    case MAJ_DOWN_LEFT:
+        *x=*x+1;
+        *y=*y-1;
+        break;
     case UP_RIGHT:
         *x=*x-1;
         *y=*y+1;
         break;
+    case MAJ_UP_RIGHT:
+        *x=*x-1;
+        *y=*y+1;
+        break;
     case DOWN_RIGHT:
+        *x=*x+1;
+        *y=*y+1;
+        break;
+    case MAJ_DOWN_RIGHT:
         *x=*x+1;
         *y=*y+1;
         break;
