@@ -23,6 +23,7 @@ int main(void)
     DisplayMap(matrice_Map, int_mapSize);
     //DebugDisplayMatriceDistance(int_mapSize, matrice_Distance);
     printf("Votre energie : %d\n",s_playerInfo_player.int_energy);
+    ShowKeyAvailable(&s_playerInfo_player, matrice_Distance);
 
     // coordonnees coordonnees_player;
     // coordonnees_player.int_x = 0;
@@ -47,6 +48,7 @@ int main(void)
         printf("\n"); 
         DisplayMap(matrice_Map, int_mapSize); 
         printf("Votre energie : %d\n",s_playerInfo_player.int_energy);
+        ShowKeyAvailable(&s_playerInfo_player, matrice_Distance);
     }
     // DebugDisplayMap(matrice_Map, int_mapSize);  
 
