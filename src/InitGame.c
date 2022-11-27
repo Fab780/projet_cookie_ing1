@@ -321,71 +321,70 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
 
 }
 
-int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_remainEnergy) //verifie si la matrice map generer possede un chemin faisable recursivement; 
+int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_ActEnergy, int* p_intEnergyNeeded) //verifie si la matrice map generer possede un chemin faisable recursivement; 
 {
+    // printf("%d\n",int_ActEnergy);
     if( !IsBetween(int_Coordx, 0, int_maxCoord) || !IsBetween(int_Coordy, 0, int_maxCoord)){ //si le chemin arrive a une bordure
         return 0;
     } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_END)){ //chemin trouvé
+        *p_intEnergyNeeded = int_ActEnergy;
         return 1;
     } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE2)){ //la case actuelle du chemin est un obstacle
         return 0;
     } else {
-        if(int_remainEnergy <= 0){
-            return 0; 
-        } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS2)){
-            int_remainEnergy += GAIN_ENERGY; 
+        if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS2)){
+            int_ActEnergy -= GAIN_ENERGY; 
         }
         switch(int_Start)
         {
             case 1: //le joueur à demarrer en 0,0
                 return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
+                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded)
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
             case 2: //le joueur à demarrer en 0,mapSize
                 return (
-                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
-                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy - 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
+                    CheckPath(matrice_Map, int_Coordx + 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx + 1, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
             case 3: //le joueur à demarrer en mapSize,0
                 return (
-                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
+                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy + 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
             case 4: //le joueur à demarrer en mapSize, mapSize
                 return (
-                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY  )
-                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
-                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
+                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded  )
+                    || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
+                    || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, int_Start, int_ActEnergy + LOST_ENERGY, p_intEnergyNeeded )
                 );
                 break;
         }
     }
 }
 
-int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize, int int_baseEnergy) //cherche si un chemin est faisable en fonction du placement du player au debut
+int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize, int* p_intEnergyNeeded) //cherche si un chemin est faisable en fonction du placement du player au debut
 {
     int int_maxCoord = int_mapSize - 1;
-    // printf("be: %d\n", int_baseEnergy);
     if(int_CoordPlayer_x == 0){
         if(int_CoordPlayer_y == 0){
-            return CheckPath(matrice_Map, 0, 0, int_maxCoord, 1, int_baseEnergy);
+            return CheckPath(matrice_Map, 0, 0, int_maxCoord, 1, 0, p_intEnergyNeeded);
         }
         else {
-            return CheckPath(matrice_Map, 0, int_maxCoord, int_maxCoord, 2, int_baseEnergy);
+            return CheckPath(matrice_Map, 0, int_maxCoord, int_maxCoord, 2, 0, p_intEnergyNeeded);
         }
     } else {
         if(int_CoordPlayer_y == 0){
-            return CheckPath(matrice_Map, int_maxCoord, 0, int_maxCoord, 3, int_baseEnergy);
+            return CheckPath(matrice_Map, int_maxCoord, 0, int_maxCoord, 3, 0, p_intEnergyNeeded);
         }
         else {
-            return CheckPath(matrice_Map, int_maxCoord, int_maxCoord, int_maxCoord, 4, int_baseEnergy);
+            return CheckPath(matrice_Map, int_maxCoord, int_maxCoord, int_maxCoord, 4, 0, p_intEnergyNeeded);
         }
     }
 }
@@ -393,19 +392,25 @@ int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlaye
 int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo_player)
 {
     int** matrice_Map = AllocMatriceMap(int_mapSize); // Allocation de la Matrice Map
-    //  
+    int int_EnergyNeeded=-1;
+    
     int bool_mapDoable = 0;
-    while(!bool_mapDoable )  //Generation d'une Map Faisable
+    while(!bool_mapDoable || (abs(int_EnergyNeeded - (BASE_ENERGY * int_mapSize) )) <= ((BASE_ENERGY * int_mapSize)/10) )  //Generation d'une Map Faisable avec une difference d'energie pas trop grande par rapport à BASE ENRGIE x mapSize
     {
+        
+        printf("doable:%d\n", bool_mapDoable);
+        printf("neededEn:%d\n", int_EnergyNeeded);
+        printf("abs:%d\n", (abs(int_EnergyNeeded - (BASE_ENERGY * int_mapSize) )));
         matrice_Map = InitMatriceMap(matrice_Map, int_mapSize);
         matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, p_playerInfo_player);
+        DisplayMap(matrice_Map,int_mapSize);
         bool_mapDoable = CheckMapDoable(matrice_Map,
-                                        p_playerInfo_player->coordonnees_player.int_x,
-                                        p_playerInfo_player->coordonnees_player.int_y,
+                                        p_playerInfo_player->int_x,
+                                        p_playerInfo_player->int_y,
                                         int_mapSize, 
-                                        p_playerInfo_player->int_energy);
+                                        &int_EnergyNeeded);
     }
-
+    p_playerInfo_player->int_energy = int_EnergyNeeded;
     return (matrice_Map);
 }
 
