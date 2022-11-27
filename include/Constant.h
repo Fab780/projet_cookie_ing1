@@ -36,10 +36,9 @@
     #define ERROR "\U0001F232"
 
 
-    #define CORNER_LEFT " "//"\uff3b"
-    #define CORNER_RIGHT " "//"\uff3d"
     #define DOWNBAR "\uff3f"
     #define UPBAR "\uffe3"
+    #define SIDEBAR "|"
 
     #define UP_ARROW "\U00002191"
     #define DOWN_ARROW "\U00002193"
