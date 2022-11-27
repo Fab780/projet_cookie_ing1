@@ -1,6 +1,10 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
-
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include "Constant.h"
+    #include "Miscellanous.h"
+    
     /*
         \brief Fonction d'affichage de la Map dans le terminal
     */
@@ -13,5 +17,7 @@
     void DebugDisplayMatriceDistance(int int_mapSize, int*** matrice_Distance);
 
     void DebugInfoPlayer(PlayerInfo s_playerInfo_player);
+
+    void EditTerminal(); //Agrandi le terminal ou le maximize si wmctrl est installer
 
 #endif

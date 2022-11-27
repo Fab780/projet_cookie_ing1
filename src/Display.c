@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "Constant.h"
-#include "Miscellanous.h"
+#include "Display.h"
 
 void DisplayMap(int** matrice_Map, int int_mapSize)
 {
@@ -129,3 +126,13 @@ void DebugInfoPlayer(PlayerInfo s_playerInfo_player)
     printf("Vos retour en arrière disponible : %d\n",s_playerInfo_player.int_backward);
 }
 
+
+void EditTerminal()
+{
+    system("\
+coX=`xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\\1/' | cut -d 'x' -f1`;\n\
+coY=`xdpyinfo | grep dimensions | sed -r 's/^[^0-9]*([0-9]+x[0-9]+).*$/\\1/' | cut -d 'x' -f2`;\n\
+resize -s `echo \"$(( $coY / 10 )) $(( $coX / 8 ))\"`>/dev/null;\n\
+");
+
+}

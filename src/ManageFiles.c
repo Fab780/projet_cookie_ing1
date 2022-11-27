@@ -1,7 +1,4 @@
-
-#include <stdio.h>
-#include <stdlib.h>
-#include "Constant.h"
+#include "ManageFiles.h"
 
 int ExistFile(char char_NameFile[])
 {

@@ -1,6 +1,13 @@
 #ifndef MOVEMENTS_H
 #define MOVEMENTS_H
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <termios.h>
+    #include "Constant.h"
+    #include "Miscellanous.h"
 
+    static struct termios old, current; //Structure qui permet de garder les deux états paramètres du terminal
+    
     //Verifie la touche pressée
     int KeyAvailable(int key);
 

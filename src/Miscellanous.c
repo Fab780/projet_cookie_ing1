@@ -1,8 +1,4 @@
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
-#include <time.h>
-#include <string.h>
+#include "Miscellanous.h"s
 
 int RNG(int min, int max)
 {
@@ -18,13 +14,18 @@ int IsBetween(int int_Comp, int int_min, int int_max){
     return (int_Comp >= int_min && int_Comp <= int_max);
 }
 
-void printf_center(const char* str, int int_LargeurConsole )
+void printf_center(const char* str)
 {
     unsigned int n;
-    for (n = 0; n < (int_LargeurConsole-strlen(str)) / 2; n++)
+    for (n = 0; n < (204-strlen(str)) / 2; n++)
     {
         putchar(' ');
     }
     printf("%s", str);
+}
+
+void InitRNG()
+{
+    srand(time(NULL)); //init RNG
 }
 

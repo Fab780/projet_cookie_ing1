@@ -1,6 +1,12 @@
 #ifndef INITGAME_H
 #define INITGAME_H
+    #include <stdlib.h>
+    #include <math.h>
+    #include <stdio.h>
+    #include <time.h>
+    #include "Constant.h"
     #include "Miscellanous.h"
+    #include "Display.h"
     
     PlayerInfo SetupPlayer();
 
@@ -8,7 +14,7 @@
 
     int ChooseMapSize();
 
-    int InitEnergy(int int_mapSize, int int_energy); // Initialise l'énergie de base du joueur en fonction de la taille de la carte
+    int InitEnergy(int int_mapSize); // Initialise l'énergie de base du joueur en fonction de la taille de la carte
 
     void UnallocMatriceMap(int** matrice_Map, int int_mapSize);
 

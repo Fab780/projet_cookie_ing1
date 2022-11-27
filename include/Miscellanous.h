@@ -1,6 +1,12 @@
 #ifndef MISCELLANOUS_H
 #define MISCELLANOUS_H
     #define square(a)  (a)*(a)
+    #include <stdlib.h>
+    #include <math.h>
+    #include <stdio.h>
+    #include <time.h>
+    #include <string.h>
+    #include <time.h>   
 
     typedef struct PlayerInfo PlayerInfo; 
     struct PlayerInfo{ // Structure contennant les informations du joueur
@@ -20,5 +26,7 @@
     int IsBetween(int int_Comp, int int_min, int int_max);
 
     void printf_center(const char* str);
+
+    void InitRNG();
 
 #endif

@@ -1,16 +1,11 @@
-#include <stdlib.h>
-#include <math.h>
-#include <stdio.h>
-#include <time.h>
-#include "Constant.h"
-#include "Miscellanous.h"
+#include "InitGame.h"
 
 PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
 {
     PlayerInfo playerInfo_player;
     playerInfo_player.int_x=0;
     playerInfo_player.int_y=0;
-    playerInfo_player.int_energy=BASE_ENERGY;
+    playerInfo_player.int_energy=0;
     playerInfo_player.int_distance=0;
     playerInfo_player.int_gain_energy=0;
     playerInfo_player.int_lost_energy=0;
@@ -56,10 +51,9 @@ int ChooseMapSize()
     }
 }
 
-int InitEnergy(int int_mapSize, int int_energy) // Initialise l'énergie de base du joueur en fonction de la taille de la carte
+int InitEnergy(int int_mapSize) // Initialise l'énergie de base du joueur en fonction de la taille de la carte
 {
-    int_energy = int_energy * int_mapSize;
-    return(int_energy);
+    return( BASE_ENERGY * int_mapSize);
 }
 
 void UnallocMatriceMap(int** matrice_Map, int int_mapSize)
@@ -329,17 +323,18 @@ int*** GenerateMatriceDistance(int int_mapSize, int*** matrice_Distance)
 
 int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoord, int int_Start, int int_remainEnergy) //verifie si la matrice map generer possede un chemin faisable recursivement; 
 {
-    if(int_remainEnergy <= 0){
+    if( !IsBetween(int_Coordx, 0, int_maxCoord) || !IsBetween(int_Coordy, 0, int_maxCoord)){ //si le chemin arrive a une bordure
         return 0;
-    } else if( !IsBetween(int_Coordx, 0, int_maxCoord) || !IsBetween(int_Coordy, 0, int_maxCoord)){
-        return 0;
-    } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_END)){
+    } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_END)){ //chemin trouvé
         return 1;
-    } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE2)){
+    } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_OBSTACLE2)){ //la case actuelle du chemin est un obstacle
         return 0;
-    } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_END)){
-        int_remainEnergy += GAIN_ENERGY;
     } else {
+        if(int_remainEnergy <= 0){
+            return 0; 
+        } else if(CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS1) || CoordCompare(matrice_Map, int_Coordx, int_Coordy, REP_BONUS2)){
+            int_remainEnergy += GAIN_ENERGY; 
+        }
         switch(int_Start)
         {
             case 1: //le joueur à demarrer en 0,0
@@ -365,20 +360,19 @@ int CheckPath(int** matrice_Map, int int_Coordx, int int_Coordy, int int_maxCoor
                 break;
             case 4: //le joueur à demarrer en mapSize, mapSize
                 return (
-                       CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY  )
+                    CheckPath(matrice_Map, int_Coordx - 1, int_Coordy, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY  )
                     || CheckPath(matrice_Map, int_Coordx, int_Coordy - 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
                     || CheckPath(matrice_Map, int_Coordx - 1, int_Coordy - 1, int_maxCoord, int_Start, int_remainEnergy - LOST_ENERGY )
                 );
                 break;
         }
-        
-
     }
 }
 
 int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlayer_y, int int_mapSize, int int_baseEnergy) //cherche si un chemin est faisable en fonction du placement du player au debut
 {
     int int_maxCoord = int_mapSize - 1;
+    // printf("be: %d\n", int_baseEnergy);
     if(int_CoordPlayer_x == 0){
         if(int_CoordPlayer_y == 0){
             return CheckPath(matrice_Map, 0, 0, int_maxCoord, 1, int_baseEnergy);
@@ -399,8 +393,9 @@ int CheckMapDoable(int** matrice_Map, int int_CoordPlayer_x,  int int_CoordPlaye
 int** InitMap(int int_mapSize, float float_diffRate, PlayerInfo* p_playerInfo_player)
 {
     int** matrice_Map = AllocMatriceMap(int_mapSize); // Allocation de la Matrice Map
+    //  
     int bool_mapDoable = 0;
-    while(!bool_mapDoable)  //Generation d'une Map Faisable
+    while(!bool_mapDoable )  //Generation d'une Map Faisable
     {
         matrice_Map = InitMatriceMap(matrice_Map, int_mapSize);
         matrice_Map = GenerateMap(matrice_Map, int_mapSize, float_diffRate, p_playerInfo_player);
