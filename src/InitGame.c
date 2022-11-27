@@ -13,41 +13,70 @@ PlayerInfo SetupPlayer() //Initialise des valeurs par défaut pour le joueur
     return playerInfo_player;
 }
 
+int ValidChoose(char myScan) //Verifie que les touches préssées soit valides
+{
+    if (myScan == '1' || myScan == '2' || myScan == '3') return 1;
+    else return 0;
+}
+
 float ChooseDifficulty()
 {
-    int int_scanDiff;
+    char int_scanDiff;
     printf("Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
-    scanf("%d", &int_scanDiff);
+    do 
+    {
+        scanf("%c", &int_scanDiff);
+        if (!ValidChoose(int_scanDiff)) {
+            system("clear");
+            printf("Wrong key pressed ! Choose a Difficulty :\n1: Easy\n2: Normal\n3: Hard\n>");
+        }
+    } while (!ValidChoose(int_scanDiff));
+
     switch (int_scanDiff) 
     {
-    case 1:
+    case '1':
         return (TAUX_DIFF_EZ);
         break;
-    case 3:
+    case '2':
+        return (TAUX_DIFF_NORMAL);
+        break;
+    case '3':
         return (TAUX_DIFF_HARD);
         break;
     default:
-        return (TAUX_DIFF_NORMAL);
-        break;
+        printf("Erreur selection difficulte");
+        exit(1);
     }
+    
 }
 
 int ChooseMapSize()
 {
-    int int_scanMapS;
-    printf("Choose the map size :\n1: Little\n2: Average\n3: Big\n>");
-    scanf("%d", &int_scanMapS);
+    char int_scanMapS;
+    printf("\nChoose the map size :\n1: Little\n2: Average\n3: Big\n>");
+    do 
+    {
+        scanf("%c", &int_scanMapS);
+        if (!ValidChoose(int_scanMapS)) {
+            system("clear");
+            printf("Wrong key pressed ! Choose the map size :\n1: Little\n2: Average\n3: Big\n>");
+        }
+    } while (!ValidChoose(int_scanMapS));
+
     switch (int_scanMapS)
     {
-    case 1:
+    case '1':
         return (TAILLE_LIL_MAP);
         break;
-    case 3:
+    case '2':
+        return (TAILLE_AVE_MAP);
+        break;
+    case '3':
         return (TAILLE_BIG_MAP);
         break;
     default:
-        return (TAILLE_AVE_MAP);
-        break;
+        printf("Erreur selection taille map");
+        exit(1);
     }
 }
 
