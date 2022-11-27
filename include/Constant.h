@@ -54,14 +54,27 @@
 
 
     #define UP 122
-    #define DOWN  120
-    #define LEFT  113
+    #define DOWN 120
+    #define LEFT 113
     #define RIGHT 100
     #define UP_LEFT 97
-    #define UP_RIGHT  101
-    #define DOWN_LEFT  119
+    #define UP_RIGHT 101
+    #define DOWN_LEFT 119
     #define DOWN_RIGHT 99
     #define STEP_BACK 114
     #define SAVE 112
+    #define LEAVE_WITHOUT_SAVE 108
+
+    #define MAJ_UP 90
+    #define MAJ_DOWN 88
+    #define MAJ_LEFT 81
+    #define MAJ_RIGHT 68
+    #define MAJ_UP_LEFT 65
+    #define MAJ_UP_RIGHT 69
+    #define MAJ_DOWN_LEFT 87
+    #define MAJ_DOWN_RIGHT 67
+    #define MAJ_STEP_BACK 82
+    #define MAJ_SAVE 80
+    #define MAJ_LEAVE_WITHOUT_SAVE 76
 
 #endif
