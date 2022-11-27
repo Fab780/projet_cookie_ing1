@@ -10,6 +10,8 @@
     
     PlayerInfo SetupPlayer();
 
+    int ValidChoose(char myScan);
+
     float ChooseDifficulty();
 
     int ChooseMapSize();
